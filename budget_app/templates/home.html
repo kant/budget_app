@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="" style="background-color: white;">
-    <!-- <div class="card-header text-center">
+<!--<div>
+     <div class="card-header text-center">
         <h4>Home page</h4>
-    </div> -->
+    </div> 
     <div class="card-body">
         {% if budget %}
         <div class="mt-3 mb-3">
@@ -30,6 +30,59 @@
             {% endif %}
         </div>
     </div>
+</div> -->
+<div class="container container-welcome">
+    {% if current_user.is_authenticated %}
+    <div>
+        <h1 class="welcome-text mb-5">Welcome back</h1>
+    </div>
+    {% else %}
+    <div>
+        <h1 class="welcome-text mb-5">Welcome to </br>budget_app</h1>
+    </div>
+    <div class="mt-5">
+        <h2>
+            A simple way to organize your finances.
+        </h2>
+    </div>
+    {% endif %}
+    <div class="dividor"></div>
+    <div class="accent"></div>
+    <div class="ml-4">
+        {% if budget %}
+        <h5>Current budget</h5>
+        {% else %}
+        <h5>How it works</h5>
+        {% endif %}
+    </div>
+    {% if current_user.is_authenticated %}
+        {% if budget %}
+        <div class="section">
+            <a href="{{ url_for('budget',budget_id=budget.id) }}" class="list-group-item-action ml-3">
+                <div>
+                    {{ budget.name }}
+                </div>
+                <small class="text-muted">Inicial Amount: {{(budget.inicial_amount | round(2))}}</small>
+                <small class="text-muted">Available Amount: {{(budget.available_amount | round(2))}}</small>
+        </div>
+        {% else %}
+        <div class="section">
+            <p>You don't have an budget</p>
+        </div>
+        {% endif %}
+        <div style="margin: auto;
+        width: fit-content;
+        margin-bottom: 50px;
+        margin-top: 50px;">
+            <a class="btn btn-primary" role="button" href="{{ url_for('categories') }}">Categories</a>
+            <a class="btn btn-primary" role="button" href="{{ url_for('budgets') }}">Budgets</a>
+        </div>
+    {% else %}
+    <div class="section">
+        <p>Create the categories for your budget</p>
+        <p>Create your budget</p>
+        <p>Start saving money</p>
+    </div>
+    {% endif %}
 </div>
-
 {% endblock %}
